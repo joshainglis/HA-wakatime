@@ -14,6 +14,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTime
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -133,12 +134,12 @@ class WakatimeSensor(CoordinatorEntity, SensorEntity):
 
         if "user_info" in coordinator.data and "data" in coordinator.data["user_info"]:
             user = coordinator.data["user_info"]["data"]
-            self._attr_device_info = {
-                "identifiers": {(DOMAIN, user.get("id", ""))},
-                "name": user.get("display_name", "Wakatime"),
-                "manufacturer": "Wakatime",
-                "model": "API",
-            }
+            self._attr_device_info = DeviceInfo(
+                identifiers={(DOMAIN, user.get("id", ""))},
+                name=user.get("display_name", "Wakatime"),
+                manufacturer="Wakatime",
+                model="API",
+            )
 
     @property
     def native_value(self) -> StateType:
