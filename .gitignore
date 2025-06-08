@@ -16,3 +16,12 @@ coverage.xml
 # Home Assistant configuration
 config/*
 !config/configuration.yaml
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
